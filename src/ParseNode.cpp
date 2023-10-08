@@ -10,8 +10,8 @@
 #include "glm/glm.hpp"
 #include "tool.h"
 
-std::unique_ptr<sf_BVHNodeT> ParseNode(const tinygltf::Node &glnode, uint64_t idx, glm::mat4 parent_transform) {
-    std::unique_ptr<sf_BVHNodeT> sfn = std::make_unique<sf_BVHNodeT>();
+std::unique_ptr<sf::BVHNodeT> ParseNode(const tinygltf::Node &glnode, uint64_t idx, glm::mat4 parent_transform) {
+    std::unique_ptr<sf::BVHNodeT> sfn = std::make_unique<sf::BVHNodeT>();
     sfn->name = glnode.name;
     glm::mat4 local = glm::mat4(1.0f);
     // parse matrix
@@ -21,9 +21,9 @@ std::unique_ptr<sf_BVHNodeT> ParseNode(const tinygltf::Node &glnode, uint64_t id
                         glnode.matrix[8], glnode.matrix[9], glnode.matrix[10], glnode.matrix[11],
                         glnode.matrix[12], glnode.matrix[13], glnode.matrix[14], glnode.matrix[15]);
     }
-    sfn->local_transform = std::make_unique<Matrix44d>(GLMMatrixToSFMatrix(local));
+    sfn->local_transform = std::make_unique<sf::Matrix44d>(GLMMatrixToSFMatrix(local));
     parent_transform = parent_transform * local;
-    sfn->global_transform = std::make_unique<Matrix44d>(GLMMatrixToSFMatrix(parent_transform));
+    sfn->global_transform = std::make_unique<sf::Matrix44d>(GLMMatrixToSFMatrix(parent_transform));
     // if mesh
     if (glnode.mesh >= 0) {
         auto mesh = ModelSingleton::get_const_instance().value->meshes[glnode.mesh];

@@ -12,7 +12,7 @@
 #include "tool.h"
 #include "tiny_gltf.h"
 
-std::unique_ptr<sf_MeshPrimitiveT> ParseMesh(const tinygltf::Mesh & glmesh);
+std::unique_ptr<sf::MeshPrimitiveT> ParseMesh(const tinygltf::Mesh & glmesh);
 
 
 #endif //GLTF2SF_PARSEMESH_H

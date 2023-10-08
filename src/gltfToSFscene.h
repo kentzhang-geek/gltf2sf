@@ -9,6 +9,6 @@
 #include "scene.h"
 #include <string>
 
-std::unique_ptr<sf_SceneT> gltfToSFscene(std::string filename);
+std::unique_ptr<sf::SceneT> gltfToSFscene(std::string filename);
 
 #endif //GLTF2SF_GLTFTOSFSCENE_H

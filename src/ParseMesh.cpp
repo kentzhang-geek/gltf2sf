@@ -4,8 +4,8 @@
 
 #include "ParseMesh.h"
 
-std::unique_ptr<sf_MeshPrimitiveT> ParseMesh(const tinygltf::Mesh &glmesh) {
-    std::unique_ptr<sf_MeshPrimitiveT> ret = std::make_unique<sf_MeshPrimitiveT>();
+std::unique_ptr<sf::MeshPrimitiveT> ParseMesh(const tinygltf::Mesh &glmesh) {
+    std::unique_ptr<sf::MeshPrimitiveT> ret = std::make_unique<sf::MeshPrimitiveT>();
     glmesh.primitives[0].attributes;
     return ret;
 }

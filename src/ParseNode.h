@@ -13,6 +13,6 @@
 #include "tiny_gltf.h"
 #include "glm/glm.hpp"
 
-std::unique_ptr<sf_BVHNodeT> ParseNode(const tinygltf::Node &glnode, uint64_t idx, glm::mat4 parent_transform);
+std::unique_ptr<sf::BVHNodeT> ParseNode(const tinygltf::Node &glnode, uint64_t idx, glm::mat4 parent_transform);
 
 #endif //GLTF2SF_PARSENODE_H

@@ -11,7 +11,7 @@
 #include "tool.h"
 #include "tiny_gltf.h"
 
-std::unique_ptr<sf_MaterialT> ParseMaterial(const tinygltf::Material & glmat, uint64_t idx);
+std::unique_ptr<sf::MaterialT> ParseMaterial(const tinygltf::Material & glmat, uint64_t idx);
 
 
 #endif //GLTF2SF_PARSEMATERIAL_H

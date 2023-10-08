@@ -11,6 +11,6 @@
 #include "tool.h"
 #include "tiny_gltf.h"
 
-std::unique_ptr<sf_CameraT> ParseCamera(const tinygltf::Camera & glcam, const tinygltf::Node &glnode, const glm::mat4 & parent_transform);
+std::unique_ptr<sf::CameraT> ParseCamera(const tinygltf::Camera & glcam, const tinygltf::Node &glnode, const glm::mat4 & parent_transform);
 
 #endif //GLTF2SF_PARSECAMERA_H

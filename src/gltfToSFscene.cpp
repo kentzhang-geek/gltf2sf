@@ -13,7 +13,7 @@
 
 #pragma optimize("", off)
 
-std::unique_ptr<sf_SceneT> gltfToSFscene(std::string filename) {
+std::unique_ptr<sf::SceneT> gltfToSFscene(std::string filename) {
     using namespace tinygltf;
 
     Model model;
@@ -32,7 +32,7 @@ std::unique_ptr<sf_SceneT> gltfToSFscene(std::string filename) {
     ModelSingleton::get_mutable_instance().value = &model;
 
     // convert to flatbuffers
-    auto scene = new sf_SceneT();
+    auto scene = new sf::SceneT();
     SceneSingleton::get_mutable_instance().value = scene;
 
     // parse material first
@@ -44,6 +44,6 @@ std::unique_ptr<sf_SceneT> gltfToSFscene(std::string filename) {
     // parse root node
     scene->root = ParseNode(model.nodes[0], 0, glm::mat4(1.0f));
 
-    return std::unique_ptr<sf_SceneT>(scene);
+    return std::unique_ptr<sf::SceneT>(scene);
 }
 

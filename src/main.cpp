@@ -13,7 +13,7 @@ std::vector<unsigned char> && ReadGltfFileToSF(std::string filepath) {
     printf("get file %s\n", filepath.c_str());
     fflush(stdout);
     auto scene = gltfToSFscene(filepath);
-    builder.Finish(Scene::Pack(builder, scene.get()));
+    builder.Finish(sf::Scene::Pack(builder, scene.get()));
     std::vector<unsigned char> ret(builder.GetSize());
     memcpy(ret.data(), builder.GetBufferPointer(), builder.GetSize());
 
