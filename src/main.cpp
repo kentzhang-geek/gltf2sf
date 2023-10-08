@@ -8,22 +8,25 @@
 #include "tool.h"
 #include "scene.h"
 
-std::vector<unsigned char> && ReadGltfFileToSF(std::string filepath) {
+#pragma optimize("", off)
+
+void ReadGltfFileToSF(std::string filepath, std::vector<unsigned char> &buffer) {
     flatbuffers::FlatBufferBuilder builder;
     printf("get file %s\n", filepath.c_str());
     fflush(stdout);
     auto scene = gltfToSFscene(filepath);
     builder.Finish(sf::Scene::Pack(builder, scene.get()));
-    std::vector<unsigned char> ret(builder.GetSize());
-    memcpy(ret.data(), builder.GetBufferPointer(), builder.GetSize());
+    buffer = std::vector<unsigned char>(builder.GetSize());
+    memcpy(buffer.data(), builder.GetBufferPointer(), builder.GetSize());
 
-    return std::move(ret);
+    return;
 }
 
 int main(int argc, char **argv) {
     if (argc == 3) {
         std::string path(argv[1]);
-        auto buffer = ReadGltfFileToSF(path);
+        std::vector<unsigned char> buffer;
+        ReadGltfFileToSF(path, buffer);
         std::string outfile(argv[2]);
         // write data to file
         std::ofstream ofile(outfile, std::ios::binary);

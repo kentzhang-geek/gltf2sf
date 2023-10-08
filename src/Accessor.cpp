@@ -66,20 +66,3 @@ sf::ElementType TypeElementofAccessor(int accIdx) {
     return sf::ElementType_eNone;
 }
 
-template<typename T>
-std::vector<T> ReadBuffer(int bufferViewIdx) {
-    std::vector<T> ret;
-    tinygltf::BufferView bufferView = gModel->bufferViews[bufferViewIdx];
-    tinygltf::Buffer buffer = gModel->buffers[bufferView.buffer];
-    if (bufferView.byteStride % sizeof(T) != 0) {
-        RTP_LOG("BufferView byteStride is not a multiple of sizeof(T)", bufferView.name, typeid(T).name());
-        return ret;
-    }
-    if (bufferView.byteLength % sizeof(T) != 0) {
-        RTP_LOG("BufferView byteStride is not a multiple of sizeof(T)", bufferView.name, typeid(T).name());
-        return ret;
-    }
-    ret.resize(bufferView.byteLength / sizeof(T));
-    memcpy(ret.data(), buffer.data.data() + bufferView.byteOffset, bufferView.byteLength);
-    return ret;
-}
