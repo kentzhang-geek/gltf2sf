@@ -33,6 +33,8 @@ set(SRC
 		src/ParseNode.h
 		src/ParseMesh.cpp
 		src/ParseMesh.h
+        src/Accessor.cpp
+        src/Accessor.h
 )
 
 add_executable(${PROJECT_NAME} ${SRC} src/main.cpp

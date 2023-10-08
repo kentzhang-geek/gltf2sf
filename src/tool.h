@@ -104,6 +104,7 @@ namespace tinygltf {
     class Model;
 }
 typedef boost::serialization::singleton<SingleContainer<tinygltf::Model *>> ModelSingleton;
+#define gModel ModelSingleton::get_const_instance().value
 
 static inline sf::Matrix44d GLMMatrixToSFMatrix(glm::mat4 m) {
     sf::Matrix44d ret;
@@ -121,7 +122,5 @@ static inline sf::Vec3d GLVecToSFVec(glm::vec3 v) {
 static inline sf::Vec4d GLVecToSFVec(glm::vec4 v) {
     return sf::Vec4d(v.x, v.y, v.z, v.w);
 }
-
-//#define DEBUG_MODE
 
 #endif //RPD_FBX_PLUGIN_TOOL_H

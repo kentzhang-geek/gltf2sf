@@ -27,7 +27,9 @@ std::unique_ptr<sf::BVHNodeT> ParseNode(const tinygltf::Node &glnode, uint64_t i
     // if mesh
     if (glnode.mesh >= 0) {
         auto mesh = ModelSingleton::get_const_instance().value->meshes[glnode.mesh];
-        sfn->meshes.push_back(ParseMesh(mesh));
+        for (auto prim : mesh.primitives) {
+            sfn->meshes.push_back(ParseMesh(prim));
+        }
     }
     // if camera
     if (glnode.camera >= 0) {
