@@ -14,6 +14,7 @@
 #include <unordered_map>
 #include <boost/serialization/config.hpp>
 #include <boost/serialization/singleton.hpp>
+#include "glm/glm.hpp"
 
 #define RTP_LOG(...) internel_cpp_printer(__VA_ARGS__)
 
@@ -97,6 +98,27 @@ public:
 
 struct sf_SceneT;
 typedef boost::serialization::singleton<SingleContainer<sf_SceneT *>> SceneSingleton;
+namespace tinygltf {
+    class Model;
+}
+typedef boost::serialization::singleton<SingleContainer<tinygltf::Model *>> ModelSingleton;
+
+static inline Matrix44d GLMMatrixToSFMatrix(glm::mat4 m) {
+    Matrix44d ret;
+    Vec4d row0(m[0][0], m[0][1], m[0][2], m[0][3]);
+    Vec4d row1(m[1][0], m[1][1], m[1][2], m[1][3]);
+    Vec4d row2(m[2][0], m[2][1], m[2][2], m[2][3]);
+    Vec4d row3(m[3][0], m[3][1], m[3][2], m[3][3]);
+    return Matrix44d(flatbuffers::make_span({row0, row1, row2, row3}));
+}
+
+static inline Vec3d GLVecToSFVec(glm::vec3 v) {
+    return Vec3d(v.x, v.y, v.z);
+}
+
+static inline Vec4d GLVecToSFVec(glm::vec4 v) {
+    return Vec4d(v.x, v.y, v.z, v.w);
+}
 
 //#define DEBUG_MODE
 

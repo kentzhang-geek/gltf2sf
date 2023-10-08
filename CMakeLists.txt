@@ -16,10 +16,23 @@ include_directories(SDK/tinygltf/include)
 link_directories(SDK/tinygltf/lib)
 link_libraries(tinygltf)
 
+# for glm
+include_directories(SDK/glm)
+link_directories(SDK/glm/lib)
+link_libraries(glm_static)
+
 set(SRC
 		src/gltfToSFscene.cpp
 		src/tool.h
 		src/gltfToSFscene.h
+		src/ParseMaterial.cpp
+		src/ParseMaterial.h
+		src/ParseCamera.cpp
+		src/ParseCamera.h
+		src/ParseNode.cpp
+		src/ParseNode.h
+		src/ParseMesh.cpp
+		src/ParseMesh.h
 )
 
 add_executable(${PROJECT_NAME} ${SRC} src/main.cpp
