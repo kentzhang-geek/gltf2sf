@@ -7,6 +7,7 @@
 #include "camera.h"
 #include "ParseCamera.h"
 #include "ParseMesh.h"
+#include "ParseLight.h"
 #include "glm/glm.hpp"
 #include "tool.h"
 
@@ -37,7 +38,7 @@ std::unique_ptr<sf::BVHNodeT> ParseNode(const tinygltf::Node &glnode, uint64_t i
     }
     // if light
     if (glnode.light >= 0) {
-
+        SceneSingleton::get_mutable_instance().value->lights.push_back(ParseLight(ModelSingleton::get_const_instance().value->lights[glnode.light], glnode, parent_transform));
     }
 //    sfn->mesh = glnode.mesh;
 //    sfn->camera = glnode.camera;

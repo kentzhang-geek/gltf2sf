@@ -31,6 +31,9 @@ std::unique_ptr<sf::TextureT> ParseTexture(int idx) {
     sftexture->media_name = gltfTexture.name;
     sftexture->file_name = img.name;
     sftexture->data = img.image;
+    sftexture->width = img.width;
+    sftexture->height = img.height;
+    sftexture->components = img.component;
     const static std::unordered_map<CompDeptPixelFormat, sf::PixelType> typeMap = {
             {{1,8, TINYGLTF_COMPONENT_TYPE_UNSIGNED_BYTE}, sf::PixelType_eRu8},
             {{2,8, TINYGLTF_COMPONENT_TYPE_UNSIGNED_BYTE}, sf::PixelType_eRGu8},
@@ -66,14 +69,14 @@ std::unique_ptr<sf::MaterialT> ParseMaterial(const tinygltf::Material &glmat, ui
     sfmat->name = glmat.name;
     sfmat->id = idx;
     // gltf pbr surface for gltf
-    sfmat->surface.Set(sf::GltfPbrSurfaceT());
+    sfmat->surface.Set(sf::LambertSurfaceT());
     for (auto kvpair : glmat.values) {
         if (kvpair.first == "baseColorTexture") {
-            sfmat->surface.AsGltfPbrSurface()->baseColor_texture = ParseTexture(kvpair.second.TextureIndex());
+            sfmat->surface.AsLambertSurface()->diffuse_texture = ParseTexture(kvpair.second.TextureIndex());
         }
         else if (kvpair.first == "baseColorFactor") {
             if (kvpair.second.number_array.size() >= 3) {
-                sfmat->surface.AsGltfPbrSurface()->baseColor = std::make_unique<sf::Vec3d>(
+                sfmat->surface.AsLambertSurface()->diffuse = std::make_unique<sf::Vec3d>(
                         kvpair.second.number_array[0], kvpair.second.number_array[1], kvpair.second.number_array[2]);
             } else {
                 RTP_LOG("unsupported baseColorFactor type", kvpair.first, glmat.name);
@@ -81,14 +84,14 @@ std::unique_ptr<sf::MaterialT> ParseMaterial(const tinygltf::Material &glmat, ui
         }
         else if (kvpair.first == "metallicFactor") {
             if (kvpair.second.has_number_value) {
-                sfmat->surface.AsGltfPbrSurface()->metallic = std::make_unique<sf::Vec3d>(kvpair.second.number_value, kvpair.second.number_value, kvpair.second.number_value);
+                sfmat->surface.AsLambertSurface()->metallic = std::make_unique<sf::Vec3d>(kvpair.second.number_value, kvpair.second.number_value, kvpair.second.number_value);
             } else {
                 RTP_LOG("unsupported metallicFactor type", kvpair.first, glmat.name);
             }
         }
         else if (kvpair.first == "roughnessFactor") {
             if (kvpair.second.has_number_value) {
-                sfmat->surface.AsGltfPbrSurface()->roughness = std::make_unique<sf::Vec3d>(kvpair.second.number_value, kvpair.second.number_value, kvpair.second.number_value);
+                sfmat->surface.AsLambertSurface()->roughness = std::make_unique<sf::Vec3d>(kvpair.second.number_value, kvpair.second.number_value, kvpair.second.number_value);
             } else {
                 RTP_LOG("unsupported roughnessFactor type", kvpair.first, glmat.name);
             }
